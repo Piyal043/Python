@@ -1,6 +1,42 @@
-sort a list using set() without changing it's order:
+Using Zip
 
-def unique(sequence):
-    seen = set()
-    return [x for x in sequence if not (x in seen or seen.add(x))]
-Note that this relies on the fact that set.add() returns None.
+
+Let me give a shot,
+
+Approach 1 : Simply passing a list
+
+>>>s='abcdefghi'
+>>>zip(s, s, s)
+[('a', 'a', 'a'), ('b', 'b', 'b'), ('c', 'c', 'c'), ('d', 'd', 'd'), ('e', 'e', 'e'), ('f', 'f', 'f'), ('g', 'g', 'g'), ('h', 'h', 'h'), ('i', 'i', 'i')]
+Explaination: Simply combining the elements of the same index.
+The total number of elements is equal to the length of smallest list. 
+Since list is same and has 9 elements, therefore there are 9 tuples.
+
+Approach 2 : Passing an interator of the list
+
+>>>s='abdefghi'
+>>>i=iter(s)
+>>>zip(i, i, i)
+[('a', 'b', 'c'), ('d', 'e', 'f'), ('g', 'h', 'i')]
+Explaination : When passing iterators, zip internally invokes the next on the subsequent passed iterators before combining them. 
+Since here, the iterator is to the same list. Hence you get such an output. 
+For example,
+
+Output of (a, b, c) comes out like this:
+
+>>next(i) # first iterator passed
+a
+>>next(i) # second iterator passed
+b
+>>next(i) # third iterator passed
+c
+Combine them => (a,b,c)
+
+While generating the second tuple, (d, e, f)
+
+>>next(i) # Again on the fist iterator, last element 'c'
+d
+>>next(i) # Again on second iterator
+e
+>>next(i) # Again on third iterator
+f
